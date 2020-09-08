@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const express = require('express');
 const app = express();
 
@@ -25,6 +26,13 @@ app.get('/api/tournaments/:id', (req, res) => {
 });
 
 app.post('/api/tournaments', (req, res) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required()
+  });
+
+  const result = schema.validate(req.body);
+  if (result.error) return res.status(400).send(result.error.details[0].message);
+
   const tournament = {
     id: tournaments.length + 1,
     name: req.body.name
