@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Tournament } = require('../models/Tournaments');
+const { Tournament, validate } = require('../models/Tournaments');
 
 router.get('/', (req, res) => {
   res.send(tournaments);
@@ -13,12 +13,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const schema = Joi.object({
-    name: Joi.string().min(3).required()
-  });
-
-  // const result = schema.validate(req.body);
-  // if (result.error) return res.status(400).send(result.error.details[0].message);
+  const { error } = validate(req.body); 
+  if (error) return res.status(400).send(error.details[0].message);
 
   const tournament = new Tournament({
     name: req.body.name,
