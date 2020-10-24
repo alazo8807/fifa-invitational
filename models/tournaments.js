@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const { matchSchema } = require('./matches');
 
 const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
   name: {
@@ -34,23 +33,35 @@ const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
       ref: 'Matches',
     }
   ]
-  
-  // genre: { 
-  //   type: genreSchema,  
-  //   required: true
-  // },
 }));
 
-// function validateMovie(movie) {
-//   const schema = {
-//     title: Joi.string().min(5).max(50).required(),
-//     genreId: Joi.objectId().required(),
-//     numberInStock: Joi.number().min(0).required(),
-//     dailyRentalRate: Joi.number().min(0).required()
-//   };
+function validateTournament(tournament) {
+  const schema = {
+    name: Joi.string()
+      .alphanum()
+      .min(2)
+      .max(20)
+      .required(),
+    tournamentType: Joi.string()
+      .alphanum()
+      .required(),
+    numberOfPlayers: Joi.number().min(2).max(20).required(),
+    players: Joi.array().items(
+      Joi.object({
+        id: Joi.string(),
+        name: Joi.string().min(1).max(20).required(),
+        team: Joi.string().min(2).max(20).required()
+      })
+    ),
+    matches: Joi.array().items(
+      Joi.object({
+        _id: Joi.string()
+      })
+    )
+  };
 
-//   return Joi.validate(movie, schema);
-// }
+  return Joi.object(schema).validate( tournament, { abortEarly: false });
+}
 
 exports.Tournament = Tournament; 
-// exports.validate = validateMovie;
+exports.validate = validateTournament;

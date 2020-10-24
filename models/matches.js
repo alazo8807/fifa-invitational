@@ -21,17 +21,25 @@ const Match = mongoose.model('Matches', new mongoose.Schema([
   matchSchema
 ]));
 
-// function validateMovie(movie) {
-//   const schema = {
-//     title: Joi.string().min(5).max(50).required(),
-//     genreId: Joi.objectId().required(),
-//     numberInStock: Joi.number().min(0).required(),
-//     dailyRentalRate: Joi.number().min(0).required()
-//   };
+function validateMatch(match) {
+  const schema = {
+    playerA: Joi.object({
+      id: Joi.string(),
+      name: Joi.string().min(1).max(20).required(),
+      team: Joi.string().min(2).max(20).required(),
+      goals: Joi.any()
+    }),
+    playerB: Joi.object({
+      id: Joi.string(),
+      name: Joi.string().min(1).max(20).required(),
+      team: Joi.string().min(2).max(20).required(),
+      goals: Joi.any()
+    })
+  };
 
-//   return Joi.validate(movie, schema);
-// }
+  return Joi.object(schema).validate( match, { abortEarly: false });
+}
 
 exports.matchSchema = matchSchema;
 exports.Match = Match; 
-// exports.validate = validateMovie;
+exports.validate = validateMatch;
