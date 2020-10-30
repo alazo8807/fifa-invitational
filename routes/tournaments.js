@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { Tournament, validate } = require('../models/Tournaments');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const tournaments = await Tournament.find();
   res.send(tournaments);
 })
 
@@ -21,11 +22,20 @@ router.post('/', async (req, res) => {
     tournamentType: req.body.tournamentType,
     numberOfPlayers: req.body.numberOfPlayers,
     players: req.body.players,
-    matches: req.body.matches
+    matches: req.body.matches,
+    createdDate: req.body.createdDate
   })
 
   const dbResult = await tournament.save();
   res.send(dbResult);
+});
+
+router.delete('/:id', async (req, res) => {
+  const tournament = await Tournament.findByIdAndRemove(req.params.id);
+
+  if (!tournament) return res.status(404).send('The tournament with the given ID was not found.');
+
+  res.send(tournament);
 });
 
 router.put('/:id', async (req, res) => {
@@ -44,7 +54,7 @@ router.put('/:id', async (req, res) => {
       matches: req.body.matches
     }, { new: true });
 
-  if (!tournament) return res.status(404).send('The movie with the given ID was not found.');
+  if (!tournament) return res.status(404).send('The tournament with the given ID was not found.');
   
   res.send(tournament);
 });

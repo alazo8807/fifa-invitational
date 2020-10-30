@@ -32,7 +32,10 @@ const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Matches',
     }
-  ]
+  ],
+  createdDate: {
+    type: Date
+  }
 }));
 
 function validateTournament(tournament) {
@@ -57,7 +60,8 @@ function validateTournament(tournament) {
       Joi.object({
         _id: Joi.string()
       })
-    )
+    ),
+    createdDate: Joi.date()
   };
 
   return Joi.object(schema).validate( tournament, { abortEarly: false });

@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -12,8 +11,6 @@ require('./startup/routes')(app);
 app.get('/', (req, res) => {
   res.send('Hello');
 });
-
-
 
 const port = process.env.PORT || 3000;
 app.listen(3000, () => console.log(`Listening on port ${port}...`));
