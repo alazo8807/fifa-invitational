@@ -41,7 +41,6 @@ const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
 function validateTournament(tournament) {
   const schema = {
     name: Joi.string()
-      .alphanum()
       .min(2)
       .max(20)
       .required(),
