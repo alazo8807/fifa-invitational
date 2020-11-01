@@ -3,7 +3,7 @@ const router = express.Router();
 const { Tournament, validate } = require('../models/Tournaments');
 
 router.get('/', async (req, res) => {
-  const tournaments = await Tournament.find();
+  const tournaments = await Tournament.find().sort('createdDate name');
   res.send(tournaments);
 })
 
@@ -21,6 +21,10 @@ router.post('/', async (req, res) => {
     name: req.body.name,
     tournamentType: req.body.tournamentType,
     numberOfPlayers: req.body.numberOfPlayers,
+    numberOfGroups: req.body.numberOfGroups,
+    numberOfPlayersPerGroup: req.body.numberOfPlayersPerGroup,
+    teamsAdvancingPerGroup: req.body.teamsAdvancingPerGroup,
+    playoffType: req.body.playoffType,
     players: req.body.players,
     matches: req.body.matches,
     createdDate: req.body.createdDate

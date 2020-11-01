@@ -2,11 +2,13 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const matchSchema = {
+  group: Number,
+  playoffRound: String,
   playerA: { 
     id: String,
     name: String,
     team: String,
-    goals: Number
+    goals: Number,
   },
   playerB: { 
     id: String,
@@ -22,6 +24,8 @@ const Match = mongoose.model('Matches', new mongoose.Schema([
 
 function validateMatch(match) {
   const schema = {
+    group: Joi.number(),
+    playoffRound: Joi.string(),
     playerA: Joi.object({
       id: Joi.string(),
       name: Joi.string().min(1).max(20).required(),

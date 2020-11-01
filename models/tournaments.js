@@ -16,15 +16,34 @@ const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
   },
   numberOfPlayers: {
     type: Number, 
-    required: true,
+    // required: true,
     min: 2,
     max: 20
+  },
+  numberOfGroups: {
+    type: Number,
+    min: 1,
+    max: 8
+  },
+  numberOfPlayersPerGroup: {
+    type: Number,
+    min: 2,
+    max: 10
+  },
+  teamsAdvancingPerGroup: {
+    type: Number,
+    min: 1,
+    max: 5
+  },
+  playoffType: {
+    type: String,
   },
   players: [
     {
       id: String,
       name: String,
       team: String,
+      group: Number
     }
   ],
   matches: [ 
@@ -47,12 +66,17 @@ function validateTournament(tournament) {
     tournamentType: Joi.string()
       .alphanum()
       .required(),
-    numberOfPlayers: Joi.number().min(2).max(20).required(),
+    numberOfPlayers: Joi.number().min(2).max(20),
+    numberOfGroups: Joi.number().min(2).max(20),
+    numberOfPlayersPerGroup: Joi.number().min(2).max(20),
+    teamsAdvancingPerGroup: Joi.number().min(2).max(20),
+    playoffType: Joi.string().alphanum(),
     players: Joi.array().items(
       Joi.object({
         id: Joi.string(),
         name: Joi.string().min(1).max(20).required(),
-        team: Joi.string().min(2).max(20).required()
+        team: Joi.string().min(2).max(20).required(),
+        group: Joi.number()
       })
     ),
     matches: Joi.array().items(
