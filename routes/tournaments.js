@@ -54,8 +54,13 @@ router.put('/:id', async (req, res) => {
       name: req.body.name,
       tournamentType: req.body.tournamentType,
       numberOfPlayers: req.body.numberOfPlayers,
+      numberOfGroups: req.body.numberOfGroups,
+      numberOfPlayersPerGroup: req.body.numberOfPlayersPerGroup,
+      teamsAdvancingPerGroup: req.body.teamsAdvancingPerGroup,
+      playoffType: req.body.playoffType,
       players: req.body.players,
-      matches: req.body.matches
+      matches: req.body.matches,
+      createdDate: req.body.createdDate
     }, { new: true });
 
   if (!tournament) return res.status(404).send('The tournament with the given ID was not found.');
