@@ -13,6 +13,8 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const match = new Match({
+    group: req.body.group,
+    playoffRound: req.body.playoffRound,
     playerA: req.body.playerA,
     playerB: req.body.playerB
   })
