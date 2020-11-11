@@ -1,4 +1,5 @@
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 
 const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
@@ -52,6 +53,10 @@ const Tournament = mongoose.model('Tournaments', new mongoose.Schema({
       ref: 'Matches',
     }
   ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  },
   createdDate: {
     type: Date
   }
@@ -84,6 +89,7 @@ function validateTournament(tournament) {
         _id: Joi.string()
       })
     ),
+    createdBy: Joi.objectId(),
     createdDate: Joi.date()
   };
 

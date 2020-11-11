@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
     playoffType: req.body.playoffType,
     players: req.body.players,
     matches: req.body.matches,
+    createdBy: req.body.createdBy,
     createdDate: req.body.createdDate
   })
 
