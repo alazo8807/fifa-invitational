@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const { Tournament, validate } = require('../models/Tournaments');
+const { User } = require('../models/user');
+const auth = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
   const tournaments = await Tournament.find().sort('createdDate name');
+  res.send(tournaments);
+})
+
+router.get('/me', auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  if (!user) res.status(400).send('Incorrect User passed');
+  const tournaments = await Tournament.find({createdBy: user._id}).sort('createdDate name');
   res.send(tournaments);
 })
 
@@ -27,6 +36,7 @@ router.post('/', async (req, res) => {
     playoffType: req.body.playoffType,
     players: req.body.players,
     matches: req.body.matches,
+    createdBy: req.body.createdBy,
     createdDate: req.body.createdDate
   })
 

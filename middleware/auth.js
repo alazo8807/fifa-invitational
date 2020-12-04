@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
   if (!token) return res.status(401).send('Access denied. No token provided.');
 
   try {
-    const decoded = jwt.verify(token, 'fifa_invitational_jwt_private_key');
+    const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
     req.user = decoded; 
     next();
   }
