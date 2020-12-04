@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Tournament, validate } = require('../models/Tournaments');
+const { Tournament, validate } = require('../models/tournaments');
 const { User } = require('../models/user');
 const auth = require('../middleware/auth');
 
