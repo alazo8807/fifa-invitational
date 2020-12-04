@@ -8,7 +8,7 @@ if (!conf.get("jwtPrivateKey")) {
   throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');
 }
 
-mongoose.connect('mongodb://localhost/fifa-invitational')
+mongoose.connect(conf.get("db"))
   .then(() => console.log("Connected to MongoDb"))
   .catch(() => console.log("Error connecting to MongoDb"))
 
