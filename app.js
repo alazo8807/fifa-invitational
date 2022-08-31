@@ -5,6 +5,7 @@ const conf = require('config');
 
 // Check jwt private key is saved in an env variable
 if (!conf.get("jwtPrivateKey")) {
+  console.log("Could not get jwtPrivateKey")
   throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');
 }
 
