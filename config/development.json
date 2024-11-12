@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "fifa_invitational_jwt_private_key"
+  "jwtPrivateKey": "fifa_invitational_jwt_private_key",
+  "db": "mongodb://localhost/fifa-invitational"
 }
