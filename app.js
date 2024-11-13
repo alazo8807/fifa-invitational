@@ -9,7 +9,6 @@ if (!conf.get("jwtPrivateKey")) {
 }
 
 mongoose.connect(conf.get("db"))
-mongoose.connect(db_uri)
   .then(() => console.log("Connected to MongoDb"))
   .catch(() => console.log("Error connecting to MongoDb"))
 
