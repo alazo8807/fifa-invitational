@@ -10,7 +10,7 @@ if (!conf.get("jwtPrivateKey")) {
 
 mongoose.connect(conf.get("db"))
   .then(() => console.log("Connected to MongoDb"))
-  .catch(() => console.log("Error connecting to MongoDb"))
+  .catch((e) => console.log(`Error connecting to MongoDb. Error: ${e}`))
 
 require('./startup/routes')(app);
 
